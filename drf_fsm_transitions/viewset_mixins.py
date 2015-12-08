@@ -7,7 +7,7 @@ def get_transition_viewset_method(transition_name):
     Create a viewset method for the provided `transition_name`
     '''
     @detail_route(methods=['post'])
-    def inner_func(self, request, pk=None):
+    def inner_func(self, request, slug=None):
         object = self.get_object()
         transition_method = getattr(object, transition_name)
 
@@ -33,7 +33,7 @@ def get_viewset_transition_action_mixin(model):
     class Mixin(object):
         save_after_transition = True
 
-    transitions = instance.get_all_status_transitions()
+    transitions = instance.get_all_state_transitions()
     transition_names = set(x.name for x in transitions)
     for transition_name in transition_names:
         setattr(
